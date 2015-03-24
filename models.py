@@ -90,10 +90,5 @@ class data_curd(object):
 		return results
 
 if __name__ == '__main__':
-	# db=DB_sqlite3()
-	# db.insert_db()
-	# db.create_db()
-	data=data_curd()
-	results=data.check_data()
-	for r in results:
-		print r['id']
+        db=DB_sqlite3()
+	db.create_db()

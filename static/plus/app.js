@@ -103,14 +103,14 @@ $(function() {
       })
       },
        douban:function(){
-        var C_article=Backbone.Model.extend(
+        var D_article=Backbone.Model.extend(
         {
           initialize:function(){},
           url:'/douban'
         });
-        var c_article=new C_article();
+        var d_article=new D_article();
         $("#links").html('');
-        c_article.fetch({
+        d_article.fetch({
           success:function(model,response){
           $(response).each(function(i){
              $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
@@ -128,14 +128,14 @@ $(function() {
       })
       },
       geekpark:function(){
-        var C_article=Backbone.Model.extend(
+        var E_article=Backbone.Model.extend(
         {
           initialize:function(){},
           url:'/geekpark'
         });
-        var c_article=new C_article();
+        var e_article=new E_article();
         $("#links").html('');
-        c_article.fetch({
+        e_article.fetch({
           success:function(model,response){
           $(response).each(function(i){
              $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");

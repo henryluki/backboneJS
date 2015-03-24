@@ -33,7 +33,7 @@ def api():
 @app.route('/36kr')
 def check_36():
 	db=data_curd()
-	article="'36氪 | 关注互联网创业'"
+	article="'36氪'"
 	data=db.check_article(article)
 	return json.dumps(data)
 

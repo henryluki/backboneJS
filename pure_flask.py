@@ -10,33 +10,39 @@ app=Flask(__name__)
 def index():
 	return render_template('new.html')
 
-@app.route('/test')
+@app.route('/latest')
+def latest():
+	db=data_curd()
+	data=db.latest_data()
+	return json.dumps(data)
+
+@app.route('/douban')
 def test():
 	db=data_curd()
 	article="'豆瓣一刻'"
 	data=db.check_article(article)
 	return json.dumps(data)
 
-@app.route('/api')
+@app.route('/yige')
 def api():
 	db=data_curd()
-	data=db.latest_data()
+	article="'一个-韩寒'"
+	data=db.check_article(article)
 	return json.dumps(data)
-
 
 @app.route('/36kr')
 def check_36():
+	db=data_curd()
 	article="'36氪 | 关注互联网创业'"
-	data=requests.get("http://myreading.sinaapp.com/36kr/?offset=-2")
-	# data=models.db_select(article)
-	# return render_template('index.html',arr=data.json())
-	return json.dumps(data.json())
+	data=db.check_article(article)
+	return json.dumps(data)
 
-@app.route('/zhihu')
-def check_zhihu():
-	article="'知乎日报'"
-	data=requests.get("http://myreading.sinaapp.com/zdaily/?offset=0")
-	# data=models.db_select(article)
-	return render_template('index.html',arr=data.json())
+@app.route('/geekpark')
+def geekpark():
+	db=data_curd()
+	article="'极客公园-GeekPark'"
+	data=db.check_article(article)
+	return json.dumps(data)
+
 if __name__ == '__main__':
 	app.run(debug=True)

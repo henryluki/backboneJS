@@ -13,17 +13,29 @@
   <link rel="stylesheet" href="static/assets/css/app.css"/>
 </head>
 <body>
-<header class="am-g my-head">
-  <div class="col-sm-12 am-article">
-    <h1 class="am-article-title" id="title"></h1>
-    <p class="am-article-meta" id="time"></p>
+<header class="am-topbar am-topbar-static-top">
+  <div class="am-container">
+    <h1 class="am-topbar-brand">
+      <a href="/">每日阅读</a>
+    </h1>
+    <div class="am-collapse am-topbar-collapse" id="collapse-head">
+      <ul class="am-nav am-nav-pills am-topbar-nav">
+        <li><a href="#yige">一个-韩寒</a></li>
+        <li><a href="#douban">豆瓣一刻</a></li>
+        <li><a href="#36kr">36kr</a></li>
+        <li><a href="#geekpark">极客公园</a></li>
+      </ul>
+    </div>
   </div>
 </header>
-<hr class="am-article-divider"/>
+<div class="am-g my-head">
+</div>
 <div class="am-container">
   <div class="col-md-8 col-md-push-3">
     <div class="am-g">
       <div class="col-sm-12 col-sm-centered">
+            <h1 class="am-article-title" id="title"></h1>
+            <p class="am-article-meta" id="time"></p>
          <div id="from"></div>
         <div class="am-cf am-article" id="content">
            <!-- content -->
@@ -34,9 +46,9 @@
   </div>
   <div class="col-md-3 col-md-pull-9 my-sidebar">
     <div class="am-offcanvas" id="sidebar">
-      <div class="am-offcanvas-bar">     
-        <ul class="am-nav" id="links">
-           <li class="am-nav-header">文章目录</li>
+      <div class="am-offcanvas-bar">
+       <p class="am-nav-header">最新文章目录</p>    
+        <ul class="am-nav" id="links"> 
           <!-- title link -->
         </ul>
       </div>
@@ -45,7 +57,7 @@
 </div>
 
 <footer class="my-footer">
-   <p>每日阅读<br><small>© Copyright  by nicksite.</small></p>
+   <p>每日阅读<br>© Copyright  by nicksite.</p>
 </footer>
 <script type="text/javascript" src="static/plus/jquery.min.js"></script>
   <script type="text/javascript" src="static/plus/underscore.min.js"></script>

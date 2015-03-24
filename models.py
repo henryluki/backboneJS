@@ -80,12 +80,12 @@ class data_curd(object):
 		self.db =DB_sqlite3()
 		
 	def latest_data(self):
-		sql='''SELECT * FROM article ORDER BY pubdate DESC LIMIT 20'''
+		sql='''SELECT * FROM article ORDER BY pubdate DESC LIMIT 5'''
 		results=self.db.check_db(sql)
 		return results
 
 	def check_article(self,article):
-		sql='''SELECT * FROM article WHERE article=%s ORDER BY pubdate DESC LIMIT 10'''%article
+		sql='''SELECT * FROM article WHERE article=%s ORDER BY pubdate DESC LIMIT 5'''%article
 		results=self.db.check_db(sql)
 		return results
 

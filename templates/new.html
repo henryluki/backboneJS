@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title id="brand"></title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="static/assets/i/favicon.png">
+  <link rel="stylesheet" href="static/assets/css/amazeui.min.css"/>
+  <style>
+    @media only screen and (min-width: 641px) {
+      .am-offcanvas {
+        display: block;
+        position: static;
+        background: none;
+      }
+
+      .am-offcanvas-bar {
+        position: static;
+        width: auto;
+        background: none;
+        -webkit-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+      .am-offcanvas-bar:after {
+        content: none;
+      }
+
+    }
+    
+    @media only screen and (max-width: 640px) {
+      .am-offcanvas-bar .am-nav>li>a {
+        color:#ccc;
+        border-radius: 0;
+        border-top: 1px solid rgba(0,0,0,.3);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.05)
+      }
+
+      .am-offcanvas-bar .am-nav>li>a:hover {
+        background: #404040;
+        color: #fff
+      }
+
+      .am-offcanvas-bar .am-nav>li.am-nav-header {
+        color: #777;
+        background: #404040;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+        text-shadow: 0 1px 0 rgba(0,0,0,.5);
+        border-top: 1px solid rgba(0,0,0,.3);
+        font-weight: 400;
+        font-size: 75%
+      }
+
+      .am-offcanvas-bar .am-nav>li.am-active>a {
+        background: #1a1a1a;
+        color: #fff;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+      }
+
+      .am-offcanvas-bar .am-nav>li+li {
+        margin-top: 0;
+      }
+    }
+
+    .my-head {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .my-button {
+      position: fixed;
+      top: 0;
+      right: 0;
+      border-radius: 0;
+    }
+    .my-sidebar {
+      padding-right: 0;
+      border-right: 1px solid #eeeeee;
+    }
+
+    .my-footer {
+      border-top: 1px solid #eeeeee;
+      padding: 10px 0;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .am-container{
+      max-width: 1170px;
+    }
+  </style>
+</head>
+<body>
+<header class="am-g my-head">
+  <div class="col-sm-12 am-article">
+    <h1 class="am-article-title" id="title"></h1>
+    <p class="am-article-meta" id="time"></p>
+  </div>
+</header>
+<hr class="am-article-divider"/>
+<div class="am-container">
+  <div class="col-md-8 col-md-push-3">
+    <div class="am-g">
+      <div class="col-sm-12 col-sm-centered">
+         <div id="from"></div>
+        <div class="am-cf am-article" id="content">
+           <!-- content -->
+        </div>
+        <hr/>      
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-md-pull-9 my-sidebar">
+    <div class="am-offcanvas" id="sidebar">
+      <div class="am-offcanvas-bar">     
+        <ul class="am-nav" id="links">
+           <li class="am-nav-header">文章目录</li>
+          <!-- title link -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="my-footer">
+   <p>每日阅读<br><small>© Copyright  by nicksite.</small></p>
+</footer>
+<script type="text/javascript" src="static/plus/jquery.min.js"></script>
+  <script type="text/javascript" src="static/plus/underscore.min.js"></script>
+  <script type="text/javascript" src="static/plus/backbone.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    //model
+    var article=Backbone.Model.extend(
+    {
+      initialize:function(){
+
+      },
+      url:'/test'
+    });
+    var a_article=new article();
+    var articles=new Array();
+    a_article.fetch({
+      success:function(model,response){
+        $(response).each(function(i){
+           $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
+           articles[i]=this;
+        })
+          $('#brand').html(articles[0]['article']);
+          $('#title').html(articles[0]['title']);
+          $('#time').html(articles[0]['pubdate']);
+          $('#content').html(articles[0]['descr']+articles[0]['content']);
+          $('#from').html('<h5 style="color:#A36D6D"><b>转自：'+articles[0]['article']+'</b><span><a href="'+articles[0]['link']+'" style="float:right;color:#A36D6D" target="_blank"><i class="glyphicon glyphicon-eye-open"></i>查看原文</a></span></h5>');
+        console.log(articles);
+      },
+      error:function(){
+        console.log("err")
+      }
+    })
+
+    //router
+    var $divShow=$("#content");
+    var $divTitle=$("#title");
+    var $divTime=$("#time");
+    var $divFrom=$("#from");
+    //action方式触发
+    var testrouter=Backbone.Router.extend({
+      routes:{
+        '':'main',
+        'article/:key':'article_read',
+      },
+      main:function(){
+        $divTitle.html(articles[0]['title']);
+        $divTime.html(articles[0]['pubdate']);
+        $divShow.html(articles[0]['descr']+articles[0]['content']);
+        $divFrom.html('<h5 style="color:#A36D6D"><b>转自：'+articles[0]['article']+'</b><span><a href="'+articles[0]['link']+'" style="float:right;color:#A36D6D" target="_blank"><i class="glyphicon glyphicon-eye-open"></i>查看原文</a></span></h5>')
+      },
+      article_read:function(key){
+        $divTitle.html(articles[key]['title']);
+        $divTime.html(articles[key]['pudate']);
+        $divShow.html(articles[key]['descr']+articles[key]['content']);
+        $divFrom.html('<h5 style="color:#A36D6D"><b>转自：'+articles[key]['article']+'</b><span><a href="'+articles[key]['link']+'" style="float:right;color:#A36D6D" target="_blank"><i class="glyphicon glyphicon-eye-open"></i>查看原文</a></span></h5>')
+      }
+    });
+    var router=new testrouter();
+    Backbone.history.start();
+
+  });
+  </script>
+</body>
+</html>

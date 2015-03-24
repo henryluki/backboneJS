@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+{%if arr%}
+{% for c in arr%}
+{{c.id}}
+{{c.article}}
+{{c.link}}
+{{c.title}}
+{{c.brief|safe}}
+{{c.descr|safe}}
+{{c.content|safe}}
+{% endfor %}
+{%else%}
+<div style="text-align:center;width:80%">
+<h1>首页</h1>
+<h2>尝试以下链接：</h2>
+<ul>
+	<ol><a href="36kr">36kr</a></li>
+	<ol><a href="zhihu">知乎</a></li>
+	<ol><a href="test">test</ol>
+</ul>
+</div>
+{%endif%}
+</body>
+</html>

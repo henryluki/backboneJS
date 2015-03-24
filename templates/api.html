@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>backbone.js调用后台api测试demo</title>
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"></li>
+	<style type="text/css">
+	body{
+		padding: 0;
+		margin: 0;
+		color: #414243;
+		font-size: 16px;
+		line-height: 1.7;
+		font-weight: 400;
+		font-family: 'Open Sans','Helvetica Neue',Arial,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+	}
+	</style>
+</head>
+ <body>
+   <div class="col-lg-offset-2 col-lg-6">
+ 	<div id="content"></div>
+ </div>
+
+ <script type="text/javascript" src="static/plus/jquery.min.js"></script>
+	<script type="text/javascript" src="static/plus/underscore.min.js"></script>
+	<script type="text/javascript" src="static/plus/backbone.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		var article=Backbone.Model.extend(
+		{
+			initialize:function(){
+
+			},
+			url:'/api'
+		});
+		var a_article=new article();
+		a_article.fetch({
+			success:function(model,response){
+				$(response).each(function(i){
+					var html="";
+					html+='<div id="div" class="panel panel-info panel-body" data-href="'+this.link+'">'; 
+                 	html+='<div style="margin-bottom:10px;">'
+                 	html+='<h4 style="padding:0"><a style="color:#1f6692">'+this.title+'</a></h4>';
+                 	html+='<small style="color:#A36D6D;">发布时间：'+this.pubdate+'<span>';
+                 	html+='<a href="'+this.link+'" style="float:right;color:#A36D6D" target="_blank"><i class="glyphicon glyphicon-eye-open"></i>查看原文</a></span></small>';
+                	 html+='</div>';
+                	 html+=' <div>'+this.descr+this.content+'</div>';
+                	 html+='</div>';
+					$('#content').append(html);
+				})
+			},
+			error:function(){
+				console.log("err")
+			}
+		})
+	});
+	</script>
+ </body>
+</html>

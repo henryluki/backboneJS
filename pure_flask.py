@@ -13,7 +13,7 @@ def index():
 @app.route('/test')
 def test():
 	db=data_curd()
-	article="'极客公园-GeekPark'"
+	article="'豆瓣一刻'"
 	data=db.check_article(article)
 	return json.dumps(data)
 

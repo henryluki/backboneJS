@@ -1,6 +1,6 @@
 $(function() {
     //model
-
+    
     var A_article=Backbone.Model.extend(
     {
       initialize:function(){},
@@ -8,6 +8,7 @@ $(function() {
     });
     var a_article=new A_article();
     var articles=new Array();
+    var _fetch=null;
     a_article.fetch({
       success:function(model,response){
         $(response).each(function(i){
@@ -24,7 +25,6 @@ $(function() {
         console.log("err")
       }
     })
-
     //router
     var $divShow=$("#content");
     var $divTitle=$("#title");

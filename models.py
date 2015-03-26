@@ -41,7 +41,7 @@ class DB_sqlite3(object):
        			(ID INTEGER PRIMARY KEY AUTOINCREMENT,
        			 article VARCHAR(50),
        			 title VARCHAR(50),
-       			 link VARCHAR(100),
+       			 link VARCHAR(100) UNIQUE,
        			 pubdate VARCHAR(50),
        			 descr TEXT NOT NULL,
        			 content TEXT NOT null
@@ -49,7 +49,7 @@ class DB_sqlite3(object):
 
 	def insert_db(self,content):
 		with sqlite3.connect("text.db") as conn:
-			conn.execute("INSERT INTO article (article,title,link,pubdate,descr,content) VALUES (?,?,?,?,?,?)",content)
+			conn.execute("INSERT OR IGNORE INTO article (article,title,link,pubdate,descr,content) VALUES (?,?,?,?,?,?)",content)
 			conn.commit()
 
 		conn.close()
@@ -80,15 +80,15 @@ class data_curd(object):
 		self.db =DB_sqlite3()
 		
 	def latest_data(self):
-		sql='''SELECT * FROM article ORDER BY pubdate DESC LIMIT 5'''
+		sql='''SELECT * FROM article ORDER BY pubdate DESC LIMIT 6'''
 		results=self.db.check_db(sql)
 		return results
 
 	def check_article(self,article):
-		sql='''SELECT * FROM article WHERE article=%s ORDER BY pubdate DESC LIMIT 5'''%article
+		sql='''SELECT * FROM article WHERE article=%s ORDER BY pubdate DESC LIMIT 6'''%article
 		results=self.db.check_db(sql)
 		return results
 
 if __name__ == '__main__':
-        db=DB_sqlite3()
+	db=DB_sqlite3()
 	db.create_db()

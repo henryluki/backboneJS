@@ -1,19 +1,11 @@
 import feedparser,time
 from multiprocessing.dummy import Pool as ThreadPool 
-from models import DB_sqlite3
+from models import *
 
 _urls=[]
-_urls.append('http://36kr.com/feed')#1h
-# _urls.append('http://www.fotofeel.com/rss')#2
-# _urls.append('http://www.huxiu.com/rss/4.xml')#3
-# _urls.append('http://www.douban.com/feed/review/book')#4
-# _urls.append('http://jiaren.org/feed/')#5
-_urls.append('http://www.geekpark.net/rss')#6
-# _urls.append('http://www.yp136.com/feed')#7
-# _urls.append('http://www.guokr.com/rss/')#guokr
-# _urls.append('http://www.qiushibaike.com/hot/rss')#qiubai
+_urls.append('http://36kr.com/feed')#36kr
+_urls.append('http://www.geekpark.net/rss')#geekpark
 _urls.append('http://onehd.herokuapp.com/')#one
-# _urls.append('http://meiwenrishang.com/rss')#meiwen
 _urls.append('http://yikerss.miantiao.me/rss')#douban
 
 def time_it(func):
@@ -31,7 +23,7 @@ class for_loop(object):
 	"""docstring for for_loop"""
 	def __init__(self):
 		super(for_loop, self).__init__()
-		self.db=DB_sqlite3()
+		self.db=DB_mysql()
 
 	@time_it
 	def run_loop(self):
@@ -67,7 +59,7 @@ class map_loop(object):
 	"""docstring for map_loop"""
 	def __init__(self):
 		super(map_loop, self).__init__()
-		self.db=DB_sqlite3()
+		self.db=DB_mysql()
 	
 	@time_it
 	def run_loop(self):

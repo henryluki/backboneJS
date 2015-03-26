@@ -6,29 +6,57 @@ class DB_mysql(object):
 	"""docstring for DB_mysql"""
 	def __init__(self):
 		super(DB_mysql, self).__init__()
-		
-	def db_select(self,article):
-		#连接数据库 传入sql语句
-		article=article
-		with MySQLdb.connect(host="localhost",user="root",passwd="1994225317",db="django",charset="utf8") as db:
-			cursor=db
+		self.host="localhost"
+		self.user="root"
+		self.passwd="1994225317"
+		self.db="flask_db"
+
+	def create_db(self):
+		with MySQLdb.connect(self.host,self.user,self.passwd,self.db) as db:
+			db.execute('''CREATE TABLE article
+       			(ID INTEGER PRIMARY KEY AUTO_INCREMENT,
+       			 article VARCHAR(50),
+       			 title VARCHAR(100),
+       			 link VARCHAR(100) UNIQUE,
+       			 pubdate VARCHAR(50),
+       			 descr TEXT NOT NULL,
+       			 content TEXT NOT null
+      			 );''')
+	
+	def insert_db(self,content):
+		db=MySQLdb.connect(self.host,self.user,self.passwd,self.db)
+		db.set_character_set('utf8')
+		cursor=db.cursor()
+		try:
+			cursor.execute("INSERT IGNORE INTO article (article,title,link,pubdate,descr,content) VALUES (%s,%s,%s,%s,%s,%s)",content)
+			db.commit()
+		except:
+			print "error"
+			db.rollback()
+		db.close()
+
+	def check_db(self,sql):
+		db=MySQLdb.connect(self.host,self.user,self.passwd,self.db)
+		db.set_character_set('utf8')
+		cursor=db.cursor()
+		try:		
+			cursor.execute(sql)
+			fetchall=cursor.fetchall()
 			data=[]
-			query="SELECT id,title,link,pubdate,brief,descr,content FROM rss_article WHERE article=%s ORDER BY pubdate DESC LIMIT 0,10" %(article)
-			# query="SELECT * FROM rss_article WHERE WHERE article=%s ORDER BY pubdate DESC LIMIT 0,10" %(article)
-			cursor.execute(query)
-			# cursor.execute(" SELECT * FROM rss_article where id=1")
-			results=cursor.fetchall()
-			for obj in results:
+			for obj in fetchall:
 				arr={}
 				arr['id']=obj[0]
-				arr['title']=obj[1]
-				arr['link']=obj[2]
-				arr['pubdate']=obj[3]
-				arr['brief']=obj[4]
+				arr['article']=obj[1]
+				arr['title']=obj[2]
+				arr['link']=obj[3]
+				arr['pubdate']=obj[4]
 				arr['descr']=obj[5]
 				arr['content']=obj[6]
 				data.append(arr)
-		return data
+			return data
+		except:
+			print "error"
+		db.close()
 
 class DB_sqlite3(object):
 	"""docstring for DB_sqlite3"""
@@ -40,7 +68,7 @@ class DB_sqlite3(object):
 			conn.execute('''CREATE TABLE article
        			(ID INTEGER PRIMARY KEY AUTOINCREMENT,
        			 article VARCHAR(50),
-       			 title VARCHAR(50),
+       			 title VARCHAR(100),
        			 link VARCHAR(100) UNIQUE,
        			 pubdate VARCHAR(50),
        			 descr TEXT NOT NULL,
@@ -77,7 +105,7 @@ class data_curd(object):
 	"""docstring for show_detail"""
 	def __init__(self):
 		super(data_curd, self).__init__()
-		self.db =DB_sqlite3()
+		self.db =DB_mysql()
 		
 	def latest_data(self):
 		sql='''SELECT * FROM article ORDER BY pubdate DESC LIMIT 6'''
@@ -90,5 +118,13 @@ class data_curd(object):
 		return results
 
 if __name__ == '__main__':
-	db=DB_sqlite3()
+	'''
+	   DB_sqlite3 for sqlite3
+	   DB_mysql for MySQLdb
+	'''
+	# db=DB_sqlite3()
+	# db.create_db()
+
+	db=DB_mysql()
 	db.create_db()
+

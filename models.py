@@ -108,7 +108,7 @@ class data_curd(object):
 		self.db =DB_mysql()
 		
 	def latest_data(self):
-		sql='''SELECT * FROM article ORDER BY pubdate DESC LIMIT 6'''
+		sql='''SELECT * FROM article ORDER BY ID DESC LIMIT 6'''
 		results=self.db.check_db(sql)
 		return results
 

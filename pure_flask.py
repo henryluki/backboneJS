@@ -8,6 +8,10 @@ import json
 app=Flask(__name__)
 @app.route('/')
 def index():
+	return render_template('old.html')
+
+@app.route('/today')
+def new():
 	return render_template('new.html')
 
 @app.route('/latest')
@@ -17,7 +21,7 @@ def latest():
 	return json.dumps(data)
 
 @app.route('/douban')
-def test():
+def douban():
 	db=data_curd()
 	article="'豆瓣一刻'"
 	data=db.check_article(article)

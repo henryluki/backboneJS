@@ -113,7 +113,7 @@ class data_curd(object):
 		return results
 
 	def check_article(self,article):
-		sql='''SELECT * FROM article WHERE article=%s ORDER BY pubdate DESC LIMIT 6'''%article
+		sql='''SELECT * FROM article WHERE article=%s ORDER BY ID DESC LIMIT 6'''%article
 		results=self.db.check_db(sql)
 		return results
 

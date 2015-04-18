@@ -1,7 +1,6 @@
 import feedparser,time
 from multiprocessing.dummy import Pool as ThreadPool 
-from models import *
-
+from views import Article
 _urls=[]
 _urls.append('http://36kr.com/feed')#36kr
 _urls.append('http://www.geekpark.net/rss')#geekpark
@@ -23,11 +22,11 @@ class for_loop(object):
 	"""docstring for for_loop"""
 	def __init__(self):
 		super(for_loop, self).__init__()
-		self.db=DB_mysql()
+		self.ar=Article()
 
 	@time_it
 	def run_loop(self):
-		db=self.db
+		ar=self.ar
 		for url in _urls:
 			feed=feedparser.parse(url)
 			contents=[]
@@ -52,18 +51,18 @@ class for_loop(object):
 					time=e.updated
 				#insert into the database
 				contents=[feed.feed.title,e.title,e.link,time,descr,content]
-				db.insert_db(contents)
+				ar.insert_ar(contents)
 
 	
 class map_loop(object):
 	"""docstring for map_loop"""
 	def __init__(self):
 		super(map_loop, self).__init__()
-		self.db=DB_mysql()
+		self.ar=Article()
 	
 	@time_it
 	def run_loop(self):
-		db=self.db
+		ar=self.ar
 		pool = ThreadPool(4) 
 		results=[]
 		results=pool.map(feedparser.parse,_urls)
@@ -91,8 +90,16 @@ class map_loop(object):
 				else:
 					time=e.updated
 				#insert into the database
-				contents=[feed.feed.title,e.title,e.link,time,descr,content]
-				db.insert_db(contents)
+				# contents=[feed.feed.title,e.title,e.link,time,descr,content]
+				temp={
+				'article':feed.feed.title,
+				'title':e.title,
+				'link':e.link,
+				'pubdate':time,
+				'descr':descr,
+				'content':content
+				}
+				ar.insert_db(temp)
 
 if __name__ == '__main__':
 	# ins_1=for_loop()

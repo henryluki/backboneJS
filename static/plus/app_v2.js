@@ -11,7 +11,8 @@ $(function() {
     var _fetch=null;
     a_article.fetch({
       success:function(model,response){
-        $(response).each(function(i){
+         var data=response.data;
+        $(data).each(function(i){
            $('#links').append("<li><a href='#post/"+i+"'>"+this.title+"</a></li>");
            articles[i]=this;
         })

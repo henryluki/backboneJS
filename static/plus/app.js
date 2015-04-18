@@ -11,7 +11,8 @@ $(function() {
     var _fetch=null;
     a_article.fetch({
       success:function(model,response){
-        $(response).each(function(i){
+        var data=response.data;
+        $(data).each(function(i){
            $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
            articles[i]=this;
         })
@@ -62,7 +63,8 @@ $(function() {
         $("#links").html('');
         b_article.fetch({
           success:function(model,response){
-          $(response).each(function(i){
+            var data=response.data;
+          $(data).each(function(i){
              $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
              articles[i]=this;
             })
@@ -87,7 +89,8 @@ $(function() {
         $("#links").html('');
         c_article.fetch({
           success:function(model,response){
-          $(response).each(function(i){
+             var data=response.data;
+          $(data).each(function(i){
              $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
              articles[i]=this;
             })
@@ -112,7 +115,8 @@ $(function() {
         $("#links").html('');
         d_article.fetch({
           success:function(model,response){
-          $(response).each(function(i){
+             var data=response.data;
+          $(data).each(function(i){
              $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
              articles[i]=this;
             })
@@ -137,7 +141,8 @@ $(function() {
         $("#links").html('');
         e_article.fetch({
           success:function(model,response){
-          $(response).each(function(i){
+             var data=response.data;
+          $(data).each(function(i){
              $('#links').append("<li><a href='#article/"+i+"'>"+this.title+"</a></li>");
              articles[i]=this;
             })

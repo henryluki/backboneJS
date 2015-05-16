@@ -39,7 +39,7 @@ class Article(DB.Model):
 			DB.session.commit()
 
 	def latest_data(self):
-		arr=Article.query.limit(6).all()
+		arr=Article.query.order_by(Article.ID.desc()).limit(6).all()
 		data=[]
 		for a in arr:
 			temp={
@@ -55,7 +55,7 @@ class Article(DB.Model):
 		return data
 
 	def check_article(self,article):
-		arr=Article.query.filter_by(article=article).order_by(Article.ID).limit(6).all()
+		arr=Article.query.filter_by(article=article).order_by(Article.ID.desc()).limit(6).all()
 		data=[]
 		for a in arr:
 			temp={

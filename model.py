@@ -10,7 +10,7 @@ FUNCTIONS----latest check read remove
 """
 from pure_flask import app
 from flask.ext.sqlalchemy import SQLAlchemy
-DB=SQLAlchemy(app)
+DB=SQLAlchemy(app,use_native_unicode="utf8")
 
 class Article(DB.Model):
 	"""docstring for show_detail"""
@@ -80,5 +80,5 @@ class Article(DB.Model):
 		DB.session.commit()
 
 if __name__ == '__main__':
-	pass
+	DB.create_all()
 
